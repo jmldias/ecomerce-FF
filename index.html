@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt" ng-app="listagemApp">
+<head>
+<!-- Head commons -->
+<title>Coding challenge FE | José Dias</title>
+
+<meta charset="UTF-8">
+<meta name="description" content="José Dias Coding challenge for personal use" />
+<meta name="keywords" content="coding, challenge, front-end" />
+
+
+<meta name="author" content="">
+<meta name="keywords" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="NOINDEX,NOFOLLOW">
+
+<link rel="stylesheet" href="css/style.css">
+<script src="js/angular.min.js"></script>
+<script src="js/comandos.js"></script>
+    </head>
+ <body ng-controller="produtos">
+     <header>
+         <div class="menu">
+            <div class="container">
+                 <h1>BRAND</h1>
+                 <div class="sintese">
+                     <span class="preco_total">{{calcularTotal() | currency:"&#163;":0}}</span>
+                     <img src="img/carrinho.png" alt="carrinho de compras">
+                     <span class="contagem_total">{{cart.length}}</span>
+                 </div>
+                <div class="cart">
+                    <p>Carrinho de compras</p>
+                    <ol class="cart_list">
+                        <li ng-repeat="item in cart">{{item.produto_nome}} - {{item.produto_preco | currency:"&#163;":0}}<button ng-click="removerProd($index)">X</button></li>
+                    </ol>
+                    <p><b>TOTAL: </b>{{calcularTotal() | currency:"&#163;"}}</p>
+                 </div>
+             </div>
+         </div>
+     </header>
+         <div class="container">
+                <ul>
+                <li ng-repeat="item in data  | startFrom:currentPage*pageSize | limitTo:pageSize" ng-class="{'select' : item.disable}" >
+                    <div class="produtos">
+                        <div class="prod_img">
+                            <img src="{{item.produto_img}}" alt=""/>
+                        </div>
+                        <div class="prod_marca"><h2>{{item.produto_nome}}</h2></div>
+                        <div class="prod_modelo"><h3>by {{item.produto_sub}}</h3></div>
+                        <div class="prod_preco"><strike>{{item.produto_preco_alt | currency:"&#163;":0}}</strike> {{item.produto_preco | currency:"&#163;":0}}</div>
+
+                        <div class="prod_detail"></div>
+                        <button class="prod_cart" ng-click="addTocart($index)" ng-disabled="item.disable">ADD TO CART</button>
+                    </div>
+                 </li>
+             </ul>
+             
+             <div class="paginacao">
+                <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                    <img src="img/seta-esq.png">
+                </button>
+                {{currentPage+1}} ... {{numberOfPages()}}
+                <button ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+                    <img src="img/seta-dir.png">
+                </button>
+             </div>
+        </div>
+    </body>
+   
+</html>
